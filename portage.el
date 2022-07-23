@@ -34,21 +34,21 @@
 If called interactively, prompt for a string to search for."
   (interactive "MSearch Portage for: ")
   (in-buffer-called "*portage*"
-    (call-process "sudo" nil t t "emerge" "search" string)
-    (goto-char (point-min))
+		    (call-process "sudo" nil t t "emerge" "search" string)
+		    (goto-char (point-min))
 
-    (kill-line 4)
+		    (kill-line 4)
 
-    (portage-search-mode)
-    (outline-minor-mode)
-    (hide-other)
+		    (portage-search-mode)
+		    (outline-minor-mode)
+		    (hide-other)
 
-    (local-set-key (kbd "s") 'show-all)
-    (local-set-key (kbd "i") 'portage-install-package-at-point)
-    (local-set-key (kbd "q") 'quit-buffer-and-window)
-    (local-set-key (kbd "<down>") 'portage-next-item)
-    (local-set-key (kbd "<up>") 'portage-previous-item)
-    (local-set-key (kbd "p") 'portage-pretend-package-at-point)))
+		    (local-set-key (kbd "s") 'show-all)
+		    (local-set-key (kbd "i") 'portage-install-package-at-point)
+		    (local-set-key (kbd "q") 'quit-buffer-and-window)
+		    (local-set-key (kbd "<down>") 'portage-next-item)
+		    (local-set-key (kbd "<up>") 'portage-previous-item)
+		    (local-set-key (kbd "p") 'portage-pretend-package-at-point)))
 
 (defun portage-install (&optional package &key flags)
   "Emerge PACKAGE from Gentoo Portage.
@@ -56,11 +56,11 @@ If called interactively, prompt for a package name."
   (interactive "MEmerge package: ")
   (let ((use-string ""))
     (when flags
-        (maphash #'(lambda (flag enabled)
-                     (unless enabled
-                       (setq use-string (concat use-string "-")))
-                     (setq use-string (concat use-string flag " ")))
-                 flags))
+      (maphash #'(lambda (flag enabled)
+                   (unless enabled
+                     (setq use-string (concat use-string "-")))
+                   (setq use-string (concat use-string flag " ")))
+               flags))
     
     (with-temp-buffer
       (start-process "portage install" nil
@@ -108,9 +108,9 @@ the previous item."
       (catch 'x
         (forward-line n)
         (until (portage-at-item-header-p)
-          (forward-line n)
-          (when (= (point) (point-max))
-            (throw 'x nil)))
+               (forward-line n)
+               (when (= (point) (point-max))
+		 (throw 'x nil)))
         (point)))))
 
 (defun portage-at-item-header-p ()
@@ -130,28 +130,28 @@ the previous item."
   nil
   nil)
 
- 
+
 
 (defun portage-pretend (package)
   "Run emerge -pv PACKAGE."
   (in-buffer-called "*portage pretend*"
-    (call-process "sudo" nil t t "emerge" "-pv" package)
-    (goto-char (point-min))
+		    (call-process "sudo" nil t t "emerge" "-pv" package)
+		    (goto-char (point-min))
 
-    (kill-line 4)
+		    (kill-line 4)
 
-    (portage-pretend-mode)
+		    (portage-pretend-mode)
 
-    (make-local-variable 'portage-pretend-package)
-    (setq portage-pretend-package package)
+		    (make-local-variable 'portage-pretend-package)
+		    (setq portage-pretend-package package)
 
-    (make-local-variable 'portage-use-flags)
-    (setq portage-use-flags (make-hash-table :test 'equal))
+		    (make-local-variable 'portage-use-flags)
+		    (setq portage-use-flags (make-hash-table :test 'equal))
 
-    (local-set-key (kbd "q") 'quit-buffer-and-window)
-    (local-set-key (kbd "+") 'portage-pretend-add-use-flag)
-    (local-set-key (kbd "-") 'portage-pretend-remove-use-flag)
-    (local-set-key (kbd "\C-c\C-c") 'portage-pretend-install)))
+		    (local-set-key (kbd "q") 'quit-buffer-and-window)
+		    (local-set-key (kbd "+") 'portage-pretend-add-use-flag)
+		    (local-set-key (kbd "-") 'portage-pretend-remove-use-flag)
+		    (local-set-key (kbd "\C-c\C-c") 'portage-pretend-install)))
 
 (defun portage-pretend-install ()
   (interactive)
@@ -207,7 +207,7 @@ the previous item."
   nil
   nil)
 
- 
+
 
 (defmacro in-buffer-called (name &rest body)
   (let ((buffer (gensym)))
