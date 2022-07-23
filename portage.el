@@ -32,6 +32,9 @@
 (defgroup paludis-package nil
   "Paludis customization options.")
 
+(defcustom paludis-elevated-user-command "sudo"
+  "'sudo' or 'doas' for elevated privelages.")
+
 (defun portage-search (&optional string)
   "Search Gentoo Portage for STRING.
 If called interactively, prompt for a string to search for."
