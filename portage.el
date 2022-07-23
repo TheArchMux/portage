@@ -29,6 +29,9 @@
 
 ;;; Code:
 
+(defgroup paludis-package nil
+  "Paludis customization options.")
+
 (defun portage-search (&optional string)
   "Search Gentoo Portage for STRING.
 If called interactively, prompt for a string to search for."
