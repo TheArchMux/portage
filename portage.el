@@ -56,24 +56,20 @@ If called interactively, prompt for a string to search for."
 		    (local-set-key (kbd "<up>") 'portage-previous-item)
 		    (local-set-key (kbd "p") 'portage-pretend-package-at-point)))
 
-(defun portage-install (&optional package &key flags)
-  "Emerge PACKAGE from Gentoo Portage.
+(defun exherbo-install (&optional package &key flags)
+  "Emerge PACKAGE from Exherbo Paludis.
 If called interactively, prompt for a package name."
-  (interactive "MEmerge package: ")
-  (let ((use-string ""))
-    (when flags
-      (maphash #'(lambda (flag enabled)
-                   (unless enabled
-                     (setq use-string (concat use-string "-")))
-                   (setq use-string (concat use-string flag " ")))
-               flags))
-    
-    (with-temp-buffer
-      (start-process "portage install" nil
-                     "xterm"
-                     "-e"
-                     (concat "USE='" use-string "' ; "
-                             "sudo emerge " package)))))
+  (interactive "Resolve package: ")
+  (with-temp-buffer
+    (start-process "paludis install" nil
+                   "st"
+                   "-e"
+		   "sh"
+		   "-c"
+                   (concat "doas cave resolve -x " package "; exec sh")
+		   )
+    )
+  )
 
 (defun portage-install-package-at-point ()
   "Install the Gentoo package whose header is under point."
