@@ -237,8 +237,10 @@ the previous item."
   (interactive)
   (get-buffer-create "Paludis show Emacs")
   (with-current-buffer "Paludis show Emacs"
-    (call-process "doas" nil t t "cave" "show" "-c" "app-editors/emacs")
-    (sleep-for 2.00)
+    (paludis-category-package-current-file)
+    (call-process "doas" nil t t "cave" "show" "-c" paludis-package)
+    (sleep-for 1.40)
+    (setq case-fold-search nil)
     (search-backward "Downloads" nil)
     (next-line)
     (back-to-indentation)
