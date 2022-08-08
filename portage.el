@@ -232,6 +232,21 @@ the previous item."
   (unless (one-window-p t 'this)
     (delete-window)))
 
+(defun exherbo-url (&optional version_prepend package)
+  "Return URL of paludis PACKAGE."
+  (interactive)
+  (get-buffer-create "Paludis show Emacs")
+  (with-current-buffer "Paludis show Emacs"
+    (call-process "doas" nil t t "cave" "show" "-c" "app-editors/emacs")
+    (sleep-for 2.00)
+    (search-backward "Downloads" nil)
+    (next-line)
+    (back-to-indentation)
+    (kill-line)
+    (erase-buffer)
+     )
+    )
+
 (provide 'portage)
 
 ;;; portage.el ends here.
