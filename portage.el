@@ -247,6 +247,20 @@ the previous item."
      )
     )
 
+(defun paludis-category-package-current-file ()
+  "Set `paludis-package' to 'CATEGORY/PACKAGE' of the current file."
+  (interactive)
+  (with-temp-buffer
+    (dired-jump)
+    (beginning-of-buffer)
+    (search-forward "packages/")
+    (push-mark)
+    (forward-sexp)
+    (kill-ring-save (mark) (point))
+    (setq paludis-package (car kill-ring))
+    )
+  )
+
 (provide 'portage)
 
 ;;; portage.el ends here.
