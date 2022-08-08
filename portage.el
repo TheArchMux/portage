@@ -246,6 +246,7 @@ the previous item."
     (back-to-indentation)
     (kill-line)
     (erase-buffer)
+    (setq paludis-package-url (car kill-ring))
      )
     )
 
@@ -261,6 +262,17 @@ the previous item."
     (kill-ring-save (mark) (point))
     (setq paludis-package (car kill-ring))
     )
+  )
+
+(defun paludis-download-package ()
+  "Download compressed package."
+  (interactive)
+  (url-copy-file paludis-package-url
+		 (concat "/home/archmux/Internet/Compressed/Package/Exherbo/"
+			 paludis-package
+			 paludis-version
+			 paludis-suffix
+			 ))
   )
 
 (provide 'portage)
