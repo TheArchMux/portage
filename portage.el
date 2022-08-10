@@ -280,12 +280,28 @@ the previous item."
 (defun paludis-download-package ()
   "Download compressed package."
   (interactive)
-  (let (()))
-  (make-directory (concat "~/Internet/Compressed/Package/Exherbo/" paludis-package) t)
-  (url-copy-file (replace-regexp-in-string exheres_version "0.15.1" paludis-package-url)
+  (exherbo-url)
+  (paludis-category-package-current-file)
+  (paludis-get-package-version)
+  (make-directory (concat "~/Internet/Compressed/Package/Exherbo/"
+			  paludis-package "/"
+			  exheres_version "/") t)
+  (paludis--determine-compression-method)
+  (url-copy-file (replace-regexp-in-string
+		  exherbo-package-version-formatted
+		  exheres_version
+		  paludis-package-url)
 		 (concat "~/Internet/Compressed/Package/Exherbo/" paludis-package "/"
-			 "0.15.1/" paludis-name-real-string "-" "0.15.1" ".tar.bz2"))
+			 exheres_version "/" paludis-name-real-string "-"
+			 exheres_version exheres_compression_method))
   )
+
+(defun exherbo-cd ()
+  "Show dired for local package."
+  (interactive)
+  (setq find-ls-option '("-type d -ls" . ""))
+  (find-dired "~/Internet/Compressed/Package/Exherbo/"
+	      (concat "-name" " " paludis-name-real-string)))
   
 (defun paludis-get-package-version ()
   "Get current exheres's corresponding version."
