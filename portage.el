@@ -29,6 +29,8 @@
 
 ;;; Code:
 
+(require 'dired)
+
 (defgroup paludis-package nil
   "Paludis customization options.")
 
