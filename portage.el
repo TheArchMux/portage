@@ -307,7 +307,7 @@ the previous item."
       (setq exheres_no_file_suffix (car (split-string exheres_file ".exlib"))))
   )
 
-(defun paludis--determine-compression-method (url)
+(defun paludis--determine-compression-method ()
   "Determine compression method based on URL."
   (interactive)
   (setq exherbo_url_base (file-name-nondirectory paludis-package-url))
