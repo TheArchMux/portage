@@ -307,6 +307,15 @@ the previous item."
       (setq exheres_no_file_suffix (car (split-string exheres_file ".exlib"))))
   )
 
+(defun paludis--determine-compression-method (url)
+  "Determine compression method based on URL."
+  (interactive)
+  (setq exherbo_url_base (file-name-nondirectory paludis-package-url))
+  (setq exheres_compression_method (string-trim-left exherbo_url_base
+						     (concat paludis-name-real-string "-"
+							     exherbo-package-version-formatted)))
+  )
+
 (provide 'portage)
 
 ;;; portage.el ends here.
