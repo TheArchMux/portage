@@ -278,12 +278,31 @@ the previous item."
 (defun paludis-download-package ()
   "Download compressed package."
   (interactive)
-  (url-copy-file paludis-package-url
-		 (concat "/home/archmux/Internet/Compressed/Package/Exherbo/"
-			 paludis-package
-			 paludis-version
-			 paludis-suffix
-			 ))
+  (let (()))
+  (make-directory (concat "~/Internet/Compressed/Package/Exherbo/" paludis-package) t)
+  (url-copy-file (replace-regexp-in-string exheres_version "0.15.1" paludis-package-url)
+		 (concat "~/Internet/Compressed/Package/Exherbo/" paludis-package "/"
+			 "0.15.1/" paludis-name-real-string "-" "0.15.1" ".tar.bz2"))
+  )
+  
+(defun paludis-get-package-version ()
+  "Get current exheres's corresponding version."
+  (interactive)
+  (setq paludis-name (cdr (split-string paludis-package "/")))
+  (setq paludis-name-string (format "%s" paludis-name))
+  (setq exheres_current_file (file-name-nondirectory buffer-file-name))
+  (paludis--remove-exheres-file-suffix exheres_current_file)
+  (setq paludis-name-real-string (replace-regexp-in-string "(\\([A-Za-z0-9]+\\))" "\\1" paludis-name-string))
+  (setq exheres_version (string-trim-left exheres_no_file_suffix (concat paludis-name-real-string "-")))
+  )
+
+(defun paludis--remove-exheres-file-suffix (exheres_file)
+  "Remove '.exheres-0' or '.exlib' from current Exheres."
+  (interactive)
+  (if (string-match ".exheres-0" exheres_file)
+      (setq exheres_no_file_suffix (car (split-string exheres_file ".exheres-0"))))
+  (if (string-match ".exlib" exheres_file)
+      (setq exheres_no_file_suffix (car (split-string exheres_file ".exlib"))))
   )
 
 (provide 'portage)
