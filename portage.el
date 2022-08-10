@@ -244,9 +244,20 @@ the previous item."
     (search-backward "Downloads" nil)
     (next-line)
     (back-to-indentation)
-    (kill-line)
-    (erase-buffer)
+    (push-mark)
+    (search-forward " ")
+    (backward-char)
+    (kill-region (mark) (point))
     (setq paludis-package-url (car kill-ring))
+    (search-backward "Homepage" nil)
+    (previous-line)
+    (back-to-indentation)
+    (zap-up-to-char 1 (string-to-char ":"))
+    (setq exherbo-package-version (car kill-ring))
+    (setq exherbo-package-version-formatted
+	  (string-trim-left exherbo-package-version
+			    (concat paludis-package "-")))
+    (erase-buffer)
      )
     )
 
